@@ -1,0 +1,92 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal;
+@model Cargo
+
+@{
+    ViewData["Title"] = "Lista de Cargos";
+}
+
+<h1>Lista de Cargos</h1>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Cadastrar Cargo</h2>
+        <form asp-action="CreateCargo" method="post" id="formCargo">
+            <div class="form-group">
+                <label for="inputNome">Nome:</label>
+                <input type="text" class="form-control" id="inputNome" name="Nome" required>
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="inputCBO">CBO:</label>
+                <input type="text" class="form-control" id="inputCBO" name="CBO" required>
+                <span asp-validation-for="CBO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="inputDescricaoAtividades">Descrição das Atividades:</label>
+                <textarea class="form-control" id="inputDescricaoAtividades" name="DescricaoAtividades" required></textarea>
+                <span asp-validation-for="DescricaoAtividades" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h2>Cargos Cadastrados</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CBO</th>
+                    <th>Descrição das Atividades</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            
+        </table>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Adicionar máscara ao campo CBO
+            $('#inputCBO').mask('000000');
+
+            // Adicionar validações ao formulário
+            $('#formCargo').validate({
+                rules: {
+                    Nome: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    CBO: {
+                        required: true,
+                        maxlength: 10
+                    },
+                    DescricaoAtividades: {
+                        required: true,
+                        maxlength: 500
+                    }
+                },
+                messages: {
+                    Nome: {
+                        required: 'O Nome é obrigatório.',
+                        maxlength: 'O Nome deve ter no máximo 100 caracteres.'
+                    },
+                    CBO: {
+                        required: 'O CBO é obrigatório.',
+                        maxlength: 'O CBO deve ter no máximo 10 caracteres.'
+                    },
+                    DescricaoAtividades: {
+                        required: 'A Descrição das Atividades é obrigatória.',
+                        maxlength: 'A Descrição das Atividades deve ter no máximo 500 caracteres.'
+                    }
+                }
+            });
+        });
+    </script>
+}

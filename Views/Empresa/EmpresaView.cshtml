@@ -1,0 +1,83 @@
+﻿@model List<Empresa>
+
+@{
+    ViewData["Title"] = "Lista de Empresas";
+}
+
+<h1>Lista de Empresas</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Cadastrar Empresa</h2>
+        <form asp-action="CreateEmpresa" method="post" id="formEmpresa">
+            <div class="form-group">
+                <label for="inputNomeFantasia">Nome Fantasia:</label>
+                <input type="text" class="form-control" id="inputNomeFantasia" name="NomeFantasia" required>
+            </div>
+            <div class="form-group">
+                <label for="inputCNPJ">CNPJ:</label>
+                <input type="text" class="form-control" id="inputCNPJ" name="CNPJ" required>
+            </div>
+            <div class="form-group">
+                <label for="inputRazaoSocial">Razão Social:</label>
+                <input type="text" class="form-control" id="inputRazaoSocial" name="RazaoSocial" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h2>Empresas Cadastradas</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome Fantasia</th>
+                    <th>CNPJ</th>
+                    <th>Razão Social</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Aplicar máscara ao campo CNPJ
+            $('#inputCNPJ').mask('00.000.000/0000-00');
+
+            // Adicionar validações ao formulário
+            $('#formEmpresa').validate({
+                rules: {
+                    NomeFantasia: {
+                        required: true
+                    },
+                    CNPJ: {
+                        required: true,
+                        pattern: /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/
+                    },
+                    RazaoSocial: {
+                        required: true
+                    }
+                },
+                messages: {
+                    NomeFantasia: {
+                        required: 'O Nome Fantasia é obrigatório.'
+                    },
+                    CNPJ: {
+                        required: 'O CNPJ é obrigatório.',
+                        pattern: 'O CNPJ deve estar no formato 00.000.000/0000-00.'
+                    },
+                    RazaoSocial: {
+                        required: 'A Razão Social é obrigatória.'
+                    }
+                }
+            });
+        });
+    </script>
+}
